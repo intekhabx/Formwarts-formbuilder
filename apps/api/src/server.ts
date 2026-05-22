@@ -1,6 +1,7 @@
 import express from "express";
 import { logger } from "@repo/logger";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { generateOpenApiDocument, createOpenApiExpressMiddleware } from "trpc-to-openapi";
@@ -25,6 +26,8 @@ const openApiDocument = generateOpenApiDocument(serverRouter, {
     }),
   );
 // }
+
+app.use(cookieParser());
 
 app.use(express.json());
 

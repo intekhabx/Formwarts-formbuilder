@@ -1,7 +1,9 @@
 import crypto from 'crypto';
 import db, { eq } from "../../database";
 import {usersTable} from '@repo/database/models/user';
-import { createUserWithEmailAndPasswordInput, createUserWithEmailAndPasswordInputType } from "./model";
+import { createUserWithEmailAndPasswordInput, createUserWithEmailAndPasswordInputType, jwtTokenPayload, jwtTokenPayloadType } from "./model";
+import * as JWT from 'jsonwebtoken';
+import { env } from '../env';
 
 
 class UserService {
@@ -10,6 +12,12 @@ class UserService {
     const user = await db.select().from(usersTable).where(eq(usersTable.email, email));
     if(!user || user.length === 0) return null;
     return user[0];
+  }
+
+  private generateUserToken = async (payload: jwtTokenPayloadType)=>{
+    const {id} = await jwtTokenPayload.parseAsync(payload);
+    const token = JWT.sign({id}, env.JWT_SECRET)
+    return {token}
   }
 
   public async createUserWithEmailAndPassword(payload: createUserWithEmailAndPasswordInputType){
@@ -38,8 +46,12 @@ class UserService {
       throw new Error("something went wrong while creating user in DB")
     }
 
+    const userId = insertedUser[0].id
+    const {token} =await this.generateUserToken({id: userId})
+
     return {
-      id: insertedUser[0].id
+      id: userId,
+      token
     }
   }
 }

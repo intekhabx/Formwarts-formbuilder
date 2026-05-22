@@ -13,10 +13,10 @@ import StarsBackground from "~/components/Home/StarsBackground";
 import Steps from "~/components/Home/Steps";
 import Testimonials from "~/components/Home/Testimonials";
 import Themes from "~/components/Home/Themes";
-import { api } from "~/trpc/server";
+// import { api } from "~/trpc/server";
 
 export default async function Home() {
-  const { status } = await api.health.getHealth.query();
+  // const { status } = await api.health.getHealth.query();
   return (
     <main className="noise relative min-h-screen bg-[#0a0600] text-[#e8d5a3]">
       <StarsBackground />
