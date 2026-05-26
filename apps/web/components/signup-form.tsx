@@ -26,11 +26,11 @@ type FormData = {
 import { Input } from "~/components/ui/input"
 import {useForm} from 'react-hook-form'
 import { trpc } from "~/trpc/client"
-import useSignup from "~/hooks/api/auth"
+import {useSignup} from "~/hooks/api/auth"
 
 export function SignupForm({className,...props}: React.ComponentProps<"div">) {
 
-  // abstract kr rhe hai - kisi ko nhi dikhana ai trpc use kr rha hun 
+  // abstract kr rhe hai - kisi ko nhi dikhana ki trpc use kr rha hun 
   // const {mutateAsync: createUserWithEmailAndPasswordAsync} = trpc.auth.createUserWithEmailAndPassword.useMutation();
   const {createUserWithEmailAndPasswordAsync} = useSignup();
 
