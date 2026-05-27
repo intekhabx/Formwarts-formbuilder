@@ -15,6 +15,13 @@
       "when": 1779135704582,
       "tag": "0001_mysterious_enchantress",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779907399524,
+      "tag": "0002_blue_warstar",
+      "breakpoints": true
     }
   ]
 }
