@@ -1,6 +1,7 @@
 
 "use client"
 
+import { useEffect } from "react";
 import CTA from "~/components/Home/Cta";
 import Features from "~/components/Home/Features";
 import Footer from "~/components/Home/Footer";
@@ -13,10 +14,24 @@ import StarsBackground from "~/components/Home/StarsBackground";
 import Steps from "~/components/Home/Steps";
 import Testimonials from "~/components/Home/Testimonials";
 import Themes from "~/components/Home/Themes";
-// import { api } from "~/trpc/server";
+import { useUser } from "~/hooks/api/auth";
+import { useRouter } from "next/navigation";
 
-export default async function Home() {
-  // const { status } = await api.health.getHealth.query();
+export default function Home() {
+  
+  const {user} = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if(user && user.id){
+      router.replace('/dashboard');
+    }
+    // else{
+    //   router.replace('/login');
+    // }
+  }, [user, router])
+  
+
   return (
     <main className="noise relative min-h-screen bg-[#0a0600] text-[#e8d5a3]">
       <StarsBackground />

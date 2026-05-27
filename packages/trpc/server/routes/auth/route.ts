@@ -1,8 +1,8 @@
 import { userService } from "../../services";
 import { publicProcedure, router } from "../../trpc";
-import { setAuthenticationCookie } from "../../utils/cookie";
+import { getAuthenticationCookie, setAuthenticationCookie } from "../../utils/cookie";
 import { generatePath } from "../../utils/path-generator";
-import { createUserWithEmailAndPasswordInputModel, createUserWithEmailAndPasswordOutputModel, loginUserWithEmailAndPasswordInputModel, loginUserWithEmailAndPasswordOutputModel } from "./model";
+import { createUserWithEmailAndPasswordInputModel, createUserWithEmailAndPasswordOutputModel, getLoggedInUserInfoInputModel, getLoggedInUserInfoOutputModel, loginUserWithEmailAndPasswordInputModel, loginUserWithEmailAndPasswordOutputModel } from "./model";
 
 const TAGS = ["Authentication"];
 const getPath = generatePath("/authentication");
@@ -48,4 +48,29 @@ export const authRouter = router({
     }
   }),
   
+
+  getLoggedInUserInfo: publicProcedure
+  .meta({
+    openapi: {
+      method: "GET",
+      path: "/getLoggedInUserInfo",
+      tags: TAGS
+    }
+  })
+  .input(getLoggedInUserInfoInputModel)
+  .output(getLoggedInUserInfoOutputModel)
+  .query(async ({ctx}) => {
+    
+    const token = getAuthenticationCookie(ctx);
+    if(!token){
+      throw new Error("user is not logged in");
+    }
+
+    const {email, fullName, id, profileImageUrl} = await userService.verifyAndDecodeUserToken(token);
+
+    return{
+      id, email, fullName, profileImageUrl
+    }
+  })
+
 });

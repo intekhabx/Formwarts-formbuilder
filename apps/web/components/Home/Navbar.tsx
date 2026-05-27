@@ -1,6 +1,11 @@
 "use client"
 
+import { useRouter } from "next/navigation";
+
 export default function Navbar() {
+
+  const router = useRouter();
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-between border-b border-[rgba(201,168,76,0.2)] bg-black/40 px-10 backdrop-blur-md">
       <div className="flex items-center gap-3">
@@ -21,11 +26,15 @@ export default function Navbar() {
       </ul>
 
       <div className="flex items-center gap-3">
-        <button className="border border-[#8a6a2a] px-4 py-2 text-[11px] uppercase tracking-[0.15em] text-[#c9a84c] transition hover:bg-[#c9a84c]/10">
+        <button
+        onClick={()=> router.push('/login')}
+        className="border border-[#8a6a2a] px-4 py-2 text-[11px] uppercase tracking-[0.15em] text-[#c9a84c] transition hover:bg-[#c9a84c]/10">
           Login
         </button>
 
-        <button className="bg-[#c9a84c] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-black transition hover:bg-[#e8d5a3]">
+        <button
+        onClick={()=> router.push("/signup")}
+        className="bg-[#c9a84c] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-black transition hover:bg-[#e8d5a3]">
           Get Started
         </button>
       </div>

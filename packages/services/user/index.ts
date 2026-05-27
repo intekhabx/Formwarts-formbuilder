@@ -14,10 +14,36 @@ class UserService {
     return user[0];
   }
 
+  private async getUserInfoById(id: string){
+    const user = await db.select({
+      id: usersTable.id,
+      email: usersTable.email,
+      fullName: usersTable.fullName,
+      profileImageUrl: usersTable.profileImageUrl
+    })
+    .from(usersTable).where(eq(usersTable.id, id));
+
+    if(!user || user.length === 0){
+      throw new Error("user with this id doesn't exist");
+    }
+
+    return user[0]!;
+  }
+
   private generateUserToken = async (payload: jwtTokenPayloadType)=>{
     const {id} = await jwtTokenPayload.parseAsync(payload);
     const token = JWT.sign({id}, env.JWT_SECRET)
     return {token}
+  }
+
+  private async verifyUserToken(token: string): Promise<jwtTokenPayloadType>{
+    try {
+      const verificationResult = JWT.verify(token, env.JWT_SECRET) as jwtTokenPayloadType;
+      return verificationResult;
+    } 
+    catch (error) {
+      throw new Error("Invalid token");
+    }
   }
 
   private generateHash(salt: string, password: string){
@@ -87,6 +113,14 @@ class UserService {
       token,
     }
   }
+
+
+  public async verifyAndDecodeUserToken(token: string){
+    const {id} = await this.verifyUserToken(token);
+    const userInfo = await this.getUserInfoById(id);
+    return {...userInfo}
+  }
+
 }
 
 export default UserService;

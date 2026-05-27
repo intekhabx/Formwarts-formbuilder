@@ -1,21 +1,9 @@
 "use client"
 
-// ─────────────────────────────────────────────────────────────
-//  LoginForm.tsx  —  Formwarts · Hogwarts Theme
-//  Logic: unchanged (react-hook-form + tRPC useLogin hook)
-//  Only styling has been replaced with Hogwarts aesthetic
-//
-//  Fonts required in layout.tsx / globals.css:
-//  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap');
-//
-//  Tailwind config — extend fontFamily:
-//  cinzel: ['Cinzel', 'serif'],
-//  fell:   ['IM Fell English', 'serif'],
-// ─────────────────────────────────────────────────────────────
-
 import { cn } from "~/lib/utils"
 import { useForm } from "react-hook-form"
 import { useLogin } from "~/hooks/api/auth"
+import { useRouter } from "next/navigation"
 
 interface FormData {
   email: string
@@ -111,8 +99,8 @@ const styles = `
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
 
-  // ── Existing logic — untouched ──
-  const { loginUserWithEmailAndPasswordAsync } = useLogin()
+  const { loginUserWithEmailAndPasswordAsync } = useLogin();
+  const router = useRouter();
 
   const {
     register,
@@ -127,9 +115,10 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       email: data.email,
       password: data.password,
     })
-    console.log(id)
+    // console.log(id)
+    router.replace('/dashboard');
   }
-  // ── End existing logic ──
+
 
   return (
     <>

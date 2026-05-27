@@ -46,7 +46,7 @@ export function setAuthenticationCookie(ctx: TRPCContext, accessToken: string){
   ctx.createCookie(AUTHENTICATION_COOKIE_NAME, accessToken)
 }
 
-export function gettAuthenticationCookie(ctx: TRPCContext){
+export function getAuthenticationCookie(ctx: TRPCContext){
   return ctx.getCookie(AUTHENTICATION_COOKIE_NAME)
 }
 
