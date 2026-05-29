@@ -1,19 +1,41 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useForm} from 'react-hook-form';
-import { useCreateForm } from '~/hooks/api/form';
+import { useCreateForm, useGetAllForms } from '~/hooks/api/form';
 
 
 const Forms = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
+  const {forms, error, isLoading} = useGetAllForms();
+  
+
   return (
     <div>
       <button onClick={()=> setIsVisible(!isVisible)}
       className='bg-slate-100 cursor-pointer text-black '>Create Form</button>
       {isVisible && <CreateFormPopUppage/>}
+
+      <div>
+        {
+          isLoading ? <div>loading....</div>
+          :
+          forms?.map((form)=> (
+            <div key={form.id} className=" flex justify-between border p-5 my-2">
+              <div>
+                <h2>{form.title}</h2>
+                <p>{form?.description}</p>
+              </div>
+              <div>
+                <p>{form.updatedAt}</p>
+                <p>{form.createdAt}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   )
 }

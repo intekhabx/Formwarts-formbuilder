@@ -13,3 +13,17 @@ export const useCreateForm = () => {
     createForm, createFormAsync, error, failureCount, isError, isIdle, isSuccess, status
   }
 }
+
+
+export const useGetAllForms = () => {
+  const {data: forms, error, isFetched, isFetching, isLoading, status} = trpc.form.getAllFormsByUserId.useQuery();
+
+  return {
+    forms,
+    error,
+    isFetched,
+    isFetching,
+    isLoading,
+    status
+  }
+}

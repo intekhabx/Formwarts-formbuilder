@@ -43,7 +43,7 @@ export default function Sidebar() {
         {/* CREATE BUTTON */}
         <button className="w-full bg-white text-black rounded-2xl py-3 mb-8 font-semibold flex items-center justify-center gap-2 hover:scale-[1.01] transition">
           <PlusCircle size={18} />
-          Create New Form
+          Quick Create
         </button>
 
         {/* MAIN MENU */}
