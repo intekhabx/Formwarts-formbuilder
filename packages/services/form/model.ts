@@ -7,3 +7,10 @@ export const createFormInput = z.object({
 });
 
 export type CreateFormInputType = z.infer<typeof createFormInput>;
+
+
+export const getAllFormsByUserIdInput = z.object({
+  userId: z.uuid().describe("UUID of the user")
+})
+
+export type GetAllFormsByUserIdInputType = z.infer<typeof getAllFormsByUserIdInput>;
