@@ -17,7 +17,7 @@ export type CreateFormFieldInputType = z.infer<typeof createFormFieldInput>;
 
 export const updateFormFieldInput = z.object({
   fieldId: z.uuid().describe("UUID of the form this field belongs to"),
-  label: z.string().max(100).optional().describe("updated display labe;"),
+  label: z.string().max(100).optional().describe("updated display label"),
   type: fieldTypeEnum.optional().describe("updated type of the field"),
   placeholder: z.string().optional().nullable().describe("updated placholder text of the form field"),
   description: z.string().optional().nullable().describe("updated description of the form field"),

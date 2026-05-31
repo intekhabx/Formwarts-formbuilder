@@ -91,6 +91,7 @@ export default class FormFieldService {
     const result = await db.select({
       id: formFieldTable.id,
       label: formFieldTable.label,
+      labelKey: formFieldTable.labelKey,
       description: formFieldTable.description,
       type: formFieldTable.type,
       isRequired: formFieldTable.isRequired,
@@ -103,7 +104,7 @@ export default class FormFieldService {
       throw new Error(`form with this id ${formId} doesn't exist`)
     }
 
-    return {form: result[0]}
+    return {form: result[0]!}
   }
 
 }
